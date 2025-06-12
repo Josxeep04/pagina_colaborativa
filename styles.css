@@ -1,0 +1,108 @@
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #000;
+        color: white;
+    }
+
+    header {
+        background-color: rgba(0, 0, 0, 0.8);
+        color: white;
+        text-align: center;
+        padding: 1em 0;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+    }
+
+    .container {
+        margin: 20px auto;
+        width: 90%;
+        max-width: 800px;
+        border: 3px solid;
+        border-image-source: linear-gradient(45deg, red, yellow, green, cyan, blue, magenta, red);
+        border-image-slice: 1;
+        border-radius: 8px;
+        padding: 10px;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+        position: relative;
+        overflow: hidden;
+        animation: rgbContainerBackground 10s infinite;
+    }
+
+    @keyframes rgbContainerBackground {
+        0% { background-color: #ff0000; }
+        25% { background-color: #00ff00; }
+        50% { background-color: #0000ff; }
+        75% { background-color: #ffff00; }
+        100% { background-color: #ff0000; }
+    }
+
+    .card {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    }
+
+    .card h2 {
+        margin-top: 0;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    table th, table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.5);
+        color: white;
+    }
+
+    table th {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    button {
+        background: linear-gradient(45deg, red, yellow, green, cyan, blue, magenta, red);
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        animation: rgbButton 5s infinite;
+    }
+
+    button:hover {
+        opacity: 0.8;
+    }
+
+    @keyframes rgbButton {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-group input, select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+    }
+</style>

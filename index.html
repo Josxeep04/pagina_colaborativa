@@ -3,14 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Sistema Básico de Ventas</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>pagina</h1>
-    <ul>
-        <li>inicio</li>
-        <li>final</li>
-    </ul>
-    
+    <div class="container">
+        <!-- Gestión de Productos -->
+        <div class="card">
+            <h2>Gestión de Productos</h2>
+            <div class="form-group">
+                <label for="product-name">Nombre del Producto:</label>
+                <input type="text" id="product-name" placeholder="Ingrese el nombre del producto">
+            </div>
+            <div class="form-group">
+                <label for="product-price">Precio:</label>
+                <input type="number" id="product-price" placeholder="Ingrese el precio">
+            </div>
+            <button onclick="addProduct()">Añadir Producto</button>
+            <h3>Lista de Productos</h3>
+            <table id="product-table">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Procesar Ventas -->
+        <div class="card">
+            <h2>Procesar Venta</h2>
+            <div class="form-group">
+                <label for="sale-product">Producto:</label>
+                <select id="sale-product">
+                    <option value="">Seleccione un producto</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="sale-quantity">Cantidad:</label>
+                <input type="number" id="sale-quantity" placeholder="Ingrese la cantidad" min="1">
+            </div>
+            <button onclick="processSale()">Procesar Venta</button>
+            <h3>Ventas Realizadas</h3>
+            <table id="sales-table">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
