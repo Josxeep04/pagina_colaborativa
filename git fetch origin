@@ -1,0 +1,262 @@
+[1mdiff --git a/index.html b/index.html[m
+[1mindex db15152..893eb52 100644[m
+[1m--- a/index.html[m
+[1m+++ b/index.html[m
+[36m@@ -3,14 +3,64 @@[m
+ <head>[m
+     <meta charset="UTF-8">[m
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">[m
+[31m-    <title>Document</title>[m
+[32m+[m[32m    <title>Sistema Básico de Ventas</title>[m
+[32m+[m[32m    <link rel="stylesheet" href="styles.css">[m
+ </head>[m
+ <body>[m
+[31m-    <h1>pagina</h1>[m
+[31m-    <ul>[m
+[31m-        <li>inicio</li>[m
+[31m-        <li>final</li>[m
+[31m-    </ul>[m
+[31m-    [m
+[32m+[m[32m    <div class="container">[m
+[32m+[m[32m        <!-- Gestión de Productos -->[m
+[32m+[m[32m        <div class="card">[m
+[32m+[m[32m            <h2>Gestión de Productos</h2>[m
+[32m+[m[32m            <div class="form-group">[m
+[32m+[m[32m                <label for="product-name">Nombre del Producto:</label>[m
+[32m+[m[32m                <input type="text" id="product-name" placeholder="Ingrese el nombre del producto">[m
+[32m+[m[32m            </div>[m
+[32m+[m[32m            <div class="form-group">[m
+[32m+[m[32m                <label for="product-price">Precio:</label>[m
+[32m+[m[32m                <input type="number" id="product-price" placeholder="Ingrese el precio">[m
+[32m+[m[32m            </div>[m
+[32m+[m[32m            <button onclick="addProduct()">Añadir Producto</button>[m
+[32m+[m[32m            <h3>Lista de Productos</h3>[m
+[32m+[m[32m            <table id="product-table">[m
+[32m+[m[32m                <thead>[m
+[32m+[m[32m                    <tr>[m
+[32m+[m[32m                        <th>Producto</th>[m
+[32m+[m[32m                        <th>Precio</th>[m
+[32m+[m[32m                    </tr>[m
+[32m+[m[32m                </thead>[m
+[32m+[m[32m                <tbody>[m
+[32m+[m[32m                </tbody>[m
+[32m+[m[32m            </table>[m
+[32m+[m[32m        </div>[m
+[32m+[m
+[32m+[m[32m        <!-- Procesar Ventas -->[m
+[32m+[m[32m        <div class="card">[m
+[32m+[m[32m            <h2>Procesar Venta</h2>[m
+[32m+[m[32m            <div class="form-group">[m
+[32m+[m[32m                <label for="sale-product">Producto:</label>[m
+[32m+[m[32m                <select id="sale-product">[m
+[32m+[m[32m                    <option value="">Seleccione un producto</option>[m
+[32m+[m[32m                </select>[m
+[32m+[m[32m            </div>[m
+[32m+[m[32m            <div class="form-group">[m
+[32m+[m[32m                <label for="sale-quantity">Cantidad:</label>[m
+[32m+[m[32m                <input type="number" id="sale-quantity" placeholder="Ingrese la cantidad" min="1">[m
+[32m+[m[32m            </div>[m
+[32m+[m[32m            <button onclick="processSale()">Procesar Venta</button>[m
+[32m+[m[32m            <h3>Ventas Realizadas</h3>[m
+[32m+[m[32m            <table id="sales-table">[m
+[32m+[m[32m                <thead>[m
+[32m+[m[32m                    <tr>[m
+[32m+[m[32m                        <th>Producto</th>[m
+[32m+[m[32m                        <th>Cantidad</th>[m
+[32m+[m[32m                        <th>Total</th>[m
+[32m+[m[32m                    </tr>[m
+[32m+[m[32m                </thead>[m
+[32m+[m[32m                <tbody>[m
+[32m+[m[32m                </tbody>[m
+[32m+[m[32m            </table>[m
+[32m+[m[32m        </div>[m
+[32m+[m[32m    </div>[m
+[32m+[m[32m    <script src="script.js"></script>[m
+ </body>[m
+[31m-</html>[m
+\ No newline at end of file[m
+[32m+[m[32m</html>[m
+[1mdiff --git a/script.js b/script.js[m
+[1mnew file mode 100644[m
+[1mindex 0000000..9f5370c[m
+[1m--- /dev/null[m
+[1m+++ b/script.js[m
+[36m@@ -0,0 +1,64 @@[m
+[32m+[m[32mconst products = [];[m
+[32m+[m[32mconst sales = [];[m
+[32m+[m
+[32m+[m[32mfunction addProduct() {[m
+[32m+[m[32m    const name = document.getElementById('product-name').value;[m
+[32m+[m[32m    const price = parseFloat(document.getElementById('product-price').value);[m
+[32m+[m
+[32m+[m[32m    if (name && price > 0) {[m
+[32m+[m[32m        products.push({ name, price });[m
+[32m+[m[32m        updateProductTable();[m
+[32m+[m[32m        updateProductDropdown();[m
+[32m+[m[32m        document.getElementById('product-name').value = '';[m
+[32m+[m[32m        document.getElementById('product-price').value = '';[m
+[32m+[m[32m    } else {[m
+[32m+[m[32m        alert('Ingrese un nombre válido y un precio mayor a 0.');[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mfunction updateProductTable() {[m
+[32m+[m[32m    const tableBody = document.querySelector('#product-table tbody');[m
+[32m+[m[32m    tableBody.innerHTML = '';[m
+[32m+[m
+[32m+[m[32m    products.forEach(product => {[m
+[32m+[m[32m        const row = `<tr><td>${product.name}</td><td>$${product.price.toFixed(2)}</td></tr>`;[m
+[32m+[m[32m        tableBody.insertAdjacentHTML('beforeend', row);[m
+[32m+[m[32m    });[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mfunction updateProductDropdown() {[m
+[32m+[m[32m    const dropdown = document.getElementById('sale-product');[m
+[32m+[m[32m    dropdown.innerHTML = '<option value="">Seleccione un producto</option>';[m
+[32m+[m
+[32m+[m[32m    products.forEach((product, index) => {[m
+[32m+[m[32m        const option = `<option value="${index}">${product.name} - $${product.price.toFixed(2)}</option>`;[m
+[32m+[m[32m        dropdown.insertAdjacentHTML('beforeend', option);[m
+[32m+[m[32m    });[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mfunction processSale() {[m
+[32m+[m[32m    const productIndex = document.getElementById('sale-product').value;[m
+[32m+[m[32m    const quantity = parseInt(document.getElementById('sale-quantity').value);[m
+[32m+[m
+[32m+[m[32m    if (productIndex !== '' && quantity > 0) {[m
+[32m+[m[32m        const product = products[productIndex];[m
+[32m+[m[32m        const total = product.price * quantity;[m
+[32m+[m
+[32m+[m[32m        sales.push({ name: product.name, quantity, total });[m
+[32m+[m[32m        updateSalesTable();[m
+[32m+[m[32m        document.getElementById('sale-product').value = '';[m
+[32m+[m[32m        document.getElementById('sale-quantity').value = '';[m
+[32m+[m[32m    } else {[m
+[32m+[m[32m        alert('Seleccione un producto y una cantidad válida.');[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mfunction updateSalesTable() {[m
+[32m+[m[32m    const tableBody = document.querySelector('#sales-table tbody');[m
+[32m+[m[32m    tableBody.innerHTML = '';[m
+[32m+[m
+[32m+[m[32m    sales.forEach(sale => {[m
+[32m+[m[32m        const row = `<tr><td>${sale.name}</td><td>${sale.quantity}</td><td>$${sale.total.toFixed(2)}</td></tr>`;[m
+[32m+[m[32m        tableBody.insertAdjacentHTML('beforeend', row);[m
+[32m+[m[32m    });[m
+[32m+[m[32m}[m
+[1mdiff --git a/styles.css b/styles.css[m
+[1mnew file mode 100644[m
+[1mindex 0000000..93027af[m
+[1m--- /dev/null[m
+[1m+++ b/styles.css[m
+[36m@@ -0,0 +1,108 @@[m
+[32m+[m[32m<style>[m
+[32m+[m[32m    body {[m
+[32m+[m[32m        font-family: Arial, sans-serif;[m
+[32m+[m[32m        margin: 0;[m
+[32m+[m[32m        padding: 0;[m
+[32m+[m[32m        background-color: #000;[m
+[32m+[m[32m        color: white;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    header {[m
+[32m+[m[32m        background-color: rgba(0, 0, 0, 0.8);[m
+[32m+[m[32m        color: white;[m
+[32m+[m[32m        text-align: center;[m
+[32m+[m[32m        padding: 1em 0;[m
+[32m+[m[32m        box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    .container {[m
+[32m+[m[32m        margin: 20px auto;[m
+[32m+[m[32m        width: 90%;[m
+[32m+[m[32m        max-width: 800px;[m
+[32m+[m[32m        border: 3px solid;[m
+[32m+[m[32m        border-image-source: linear-gradient(45deg, red, yellow, green, cyan, blue, magenta, red);[m
+[32m+[m[32m        border-image-slice: 1;[m
+[32m+[m[32m        border-radius: 8px;[m
+[32m+[m[32m        padding: 10px;[m
+[32m+[m[32m        box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);[m
+[32m+[m[32m        position: relative;[m
+[32m+[m[32m        overflow: hidden;[m
+[32m+[m[32m        animation: rgbContainerBackground 10s infinite;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    @keyframes rgbContainerBackground {[m
+[32m+[m[32m        0% { background-color: #ff0000; }[m
+[32m+[m[32m        25% { background-color: #00ff00; }[m
+[32m+[m[32m        50% { background-color: #0000ff; }[m
+[32m+[m[32m        75% { background-color: #ffff00; }[m
+[32m+[m[32m        100% { background-color: #ff0000; }[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    .card {[m
+[32m+[m[32m        background: rgba(255, 255, 255, 0.1);[m
+[32m+[m[32m        border-radius: 8px;[m
+[32m+[m[32m        padding: 20px;[m
+[32m+[m[32m        margin-bottom: 20px;[m
+[32m+[m[32m        box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    .card h2 {[m
+[32m+[m[32m        margin-top: 0;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    table {[m
+[32m+[m[32m        width: 100%;[m
+[32m+[m[32m        border-collapse: collapse;[m
+[32m+[m[32m        margin-top: 10px;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    table th, table td {[m
+[32m+[m[32m        border: 1px solid #ddd;[m
+[32m+[m[32m        padding: 8px;[m
+[32m+[m[32m        text-align: center;[m
+[32m+[m[32m        background: rgba(0, 0, 0, 0.5);[m
+[32m+[m[32m        color: white;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    table th {[m
+[32m+[m[32m        background-color: rgba(255, 255, 255, 0.2);[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    button {[m
+[32m+[m[32m        background: linear-gradient(45deg, red, yellow, green, cyan, blue, magenta, red);[m
+[32m+[m[32m        color: white;[m
+[32m+[m[32m        border: none;[m
+[32m+[m[32m        padding: 10px 15px;[m
+[32m+[m[32m        border-radius: 5px;[m
+[32m+[m[32m        cursor: pointer;[m
+[32m+[m[32m        animation: rgbButton 5s infinite;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    button:hover {[m
+[32m+[m[32m        opacity: 0.8;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    @keyframes rgbButton {[m
+[32m+[m[32m        0% { background-position: 0% 50%; }[m
+[32m+[m[32m        50% { background-position: 100% 50%; }[m
+[32m+[m[32m        100% { background-position: 0% 50%; }[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    .form-group {[m
+[32m+[m[32m        margin-bottom: 15px;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    .form-group label {[m
+[32m+[m[32m        display: block;[m
+[32m+[m[32m        margin-bottom: 5px;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    .form-group input, select {[m
+[32m+[m[32m        width: 100%;[m
+[32m+[m[32m        padding: 8px;[m
+[32m+[m[32m        border: 1px solid #ccc;[m
+[32m+[m[32m        border-radius: 5px;[m
+[32m+[m[32m        background: rgba(0, 0, 0, 0.8);[m
+[32m+[m[32m        color: white;[m
+[32m+[m[32m    }[m
+[32m+[m[32m</style>[m

@@ -1,108 +1,248 @@
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #000;
-        color: white;
-    }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-    header {
-        background-color: rgba(0, 0, 0, 0.8);
-        color: white;
-        text-align: center;
-        padding: 1em 0;
-        box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
-    }
+:root {
+    --primary-color: #2196F3;
+    --success-color: #4CAF50;
+    --danger-color: #f44336;
+    --text-color: #333;
+    --bg-color: #f0f2f5;
+    --card-bg: #ffffff;
+    --border-radius: 12px;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
 
+body {
+    background-color: var(--bg-color);
+    padding: 20px;
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    padding: 20px;
+}
+
+.card {
+    background-color: var(--card-bg);
+    padding: 25px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+h2 {
+    color: var(--primary-color);
+    margin-bottom: 25px;
+    border-bottom: 3px solid var(--primary-color);
+    padding-bottom: 12px;
+    font-size: 1.8em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+h3 {
+    color: var(--text-color);
+    margin: 25px 0 15px;
+    font-size: 1.4em;
+    font-weight: 600;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-color);
+    font-weight: 500;
+    font-size: 0.95em;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: var(--border-radius);
+    font-size: 1em;
+    transition: var(--transition);
+    background-color: #f8f9fa;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+}
+
+button {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    transition: var(--transition);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+button:hover {
+    background-color: #1976D2;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 15px;
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+th {
+    background-color: #f8f9fa;
+    color: var(--text-color);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    letter-spacing: 0.5px;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover td {
+    background-color: #f8f9fa;
+}
+
+.btn-edit, .btn-delete {
+    padding: 8px 16px;
+    margin: 0 5px;
+    font-size: 0.9em;
+    border-radius: 6px;
+}
+
+.btn-edit {
+    background-color: var(--primary-color);
+}
+
+.btn-edit:hover {
+    background-color: #1976D2;
+}
+
+.btn-delete {
+    background-color: var(--danger-color);
+}
+
+.btn-delete:hover {
+    background-color: #d32f2f;
+}
+
+.total-sales {
+    margin-top: 25px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: var(--border-radius);
+    text-align: right;
+    border: 2px solid var(--success-color);
+}
+
+#total-sales {
+    color: var(--success-color);
+    font-weight: bold;
+    font-size: 1.4em;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card {
+    animation: fadeIn 0.5s ease-out;
+}
+
+@media (max-width: 768px) {
     .container {
-        margin: 20px auto;
-        width: 90%;
-        max-width: 800px;
-        border: 3px solid;
-        border-image-source: linear-gradient(45deg, red, yellow, green, cyan, blue, magenta, red);
-        border-image-slice: 1;
-        border-radius: 8px;
+        grid-template-columns: 1fr;
         padding: 10px;
-        box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
-        position: relative;
-        overflow: hidden;
-        animation: rgbContainerBackground 10s infinite;
     }
-
-    @keyframes rgbContainerBackground {
-        0% { background-color: #ff0000; }
-        25% { background-color: #00ff00; }
-        50% { background-color: #0000ff; }
-        75% { background-color: #ffff00; }
-        100% { background-color: #ff0000; }
-    }
-
+    
     .card {
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
-        padding: 20px;
         margin-bottom: 20px;
-        box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+        padding: 15px;
     }
-
-    .card h2 {
-        margin-top: 0;
-    }
-
+    
     table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 10px;
-    }
-
-    table th, table td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: center;
-        background: rgba(0, 0, 0, 0.5);
-        color: white;
-    }
-
-    table th {
-        background-color: rgba(255, 255, 255, 0.2);
-    }
-
-    button {
-        background: linear-gradient(45deg, red, yellow, green, cyan, blue, magenta, red);
-        color: white;
-        border: none;
-        padding: 10px 15px;
-        border-radius: 5px;
-        cursor: pointer;
-        animation: rgbButton 5s infinite;
-    }
-
-    button:hover {
-        opacity: 0.8;
-    }
-
-    @keyframes rgbButton {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-
-    .form-group {
-        margin-bottom: 15px;
-    }
-
-    .form-group label {
         display: block;
-        margin-bottom: 5px;
+        overflow-x: auto;
+        white-space: nowrap;
     }
-
-    .form-group input, select {
+    
+    button {
         width: 100%;
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        background: rgba(0, 0, 0, 0.8);
-        color: white;
+        margin-bottom: 10px;
     }
-</style>
+    
+    .btn-edit, .btn-delete {
+        width: auto;
+        margin: 5px;
+    }
+    
+    h2 {
+        font-size: 1.5em;
+    }
+    
+    h3 {
+        font-size: 1.2em;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #1976D2;
+}
